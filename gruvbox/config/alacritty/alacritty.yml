@@ -1,0 +1,6 @@
+import:
+  - ~/.config/alacritty/gruvbox.yml
+
+font:
+  normal:
+    family: JetBrainsMono Nerd Font
