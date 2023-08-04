@@ -1,0 +1,129 @@
+{
+    "layer": "top",
+    "height": 40,
+
+    "modules-left":
+    [
+	"image",
+	"user",
+	"memory",
+	"temperature",
+	"disk",
+	"mpris"
+    ],
+
+    "modules-center":
+    [
+	"wlr/workspaces"
+    ],
+
+    "modules-right":
+    [
+	"network",
+	"wireplumber",
+	"battery",
+	"clock"
+    ],
+
+    "image":
+    {
+	"path": "/home/ssa/.config/waybar/icon.png",
+	"size": 21
+    },
+
+    "user":
+    {
+	"interval": 1,
+	"format": "  {user} | {work_H}:{work_M}:{work_S}"
+    },
+
+    "memory":
+    {
+	"interval": 5,
+	"format": "  {used}GiB"
+    },
+
+    "temperature":
+    {
+	"interval": 5,
+	"format": " {temperatureC}°C",
+	"format-critical": " {temperatureC}°C",
+	"critical-threshold": 80,
+    },
+
+    "disk":
+    {
+	"interval": 5,
+	"format": "/ {free}",
+	"path": "/",
+	"states":
+	{
+	    "critical": 100
+	}
+    },
+
+    "hyprland/window": 
+    {
+        "max-length": 50
+    },
+
+    "mpris":
+    {
+	"interval": 1,
+	"player": "spotify",
+	"format": "  {artist} - {title}",
+	"format-paused": " ",
+	"max-length": 40
+    },
+
+    "cava":
+    {
+	"cava_config": "/home/ssa/.config/cava/config"
+    },
+
+    "wlr/workspaces":
+    {
+        "format": "{icon}",
+	"format-icons":
+	{
+	    "default": " ",
+	    "active": " ",
+	    "urgent": "󰀨 "
+	}
+    },
+
+    "tray":
+    {
+	"icon-size": 15,
+	"spacing": 1
+    },
+
+    "network":
+    {
+	"format-wifi": "󰤨  {essid}",
+	"format-disconnected": "󰤭 "
+    },
+
+    "wireplumber":
+    {
+	"format": "󰕾 {volume}%",
+	"format-muted": "󰖁 "
+    },
+
+    "battery":
+    {
+        "inteval": 1,
+        "format": "{icon}  {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+	    "format-charging": "󱐋 {icon}  {capacity}%",
+	    "states":
+	    {
+	        "critical": 20
+	    }
+    },
+
+    "clock":
+    {
+	"format": "{:%a %d %b | %H:%M}"
+    }
+}
