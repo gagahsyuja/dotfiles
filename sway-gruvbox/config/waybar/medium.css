@@ -1,0 +1,133 @@
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 15px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: rgba(40, 40, 40, 0.85);
+    color: #d4be98;
+}
+
+button:hover {
+    box-shadow: none;
+}
+
+#workspaces {
+    /*background-color: #3c3836;*/
+    border-radius: 0%;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+#workspaces button {
+    color: #d4be98;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+#workspaces button label {
+    font-size: 18px;
+}
+
+#workspaces button:hover {
+    background: transparent;
+    border-color: transparent;
+    text-shadow: 0px 0px 8px #d4be98;
+    transition: 0.3s;
+}
+
+#workspaces button:not(:hover) {
+    transition: 0.2s;
+}
+
+#workspaces button.focused {
+}
+
+#temperature,
+#memory,
+#disk,
+#mpris,
+#backlight,
+#wireplumber,
+#battery,
+#clock {
+    background-color: rgba(69, 64, 61, 0.90);
+    color: #d4be98;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+#temperature.icon,
+#memory.icon,
+#disk.icon,
+#mpris.icon,
+#wireplumber.icon,
+#battery.icon,
+#clock.icon {
+    background-color: #d4be98;
+    color: #45403d;
+    margin-left: 10px;
+    margin-right: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 8px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 8px;
+    font-size: 20px;
+}
+
+#custom-logo {
+    color: #d4be98;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 13px;
+    padding-right: 20px;
+    border-radius: 8px;
+    font-size: 22px;
+}
+
+#temperature.critical {
+    background-color: #4c3432;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 8px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 8px;
+    font-size: 18px;
+}
+
+#mpris.paused {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+#mpris.icon {
+    background-color: rgba(69, 64, 61, 0.90);
+    color: #a9b665;
+    padding-right: 10px;
+    padding-left: 15px;
+}
+
+#wireplumber.icon.muted {
+    background-color: #ea6962;
+}
+
+#battery.icon.charging {
+    background-color: #a9b665;
+}
+
+#battery.icon.warning {
+    background-color: #d8a657;
+}
+
+#battery.icon.critical {
+    background-color: #ea6962;
+}
+
+#clock {
+    margin-right: 20px;
+}
