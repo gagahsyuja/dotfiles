@@ -1,4 +1,4 @@
-<h1 style="text-align: center;">DOTFILES</h1>
+<h1 align="center">DOTFILES</h1>
 
 > ~~I use Arch btw~~
 
