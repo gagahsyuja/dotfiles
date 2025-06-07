@@ -22,37 +22,79 @@ set $term kitty
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/ssa/Pictures/plane.jpg fill
+exec_always "swww init"
+exec_always "swww img ~/Pictures/plane.jpg"
+# output * bg /home/ssa/Pictures/plane.jpg fill
+
+set $primary eDP-1
+set $secondary HDMI-A-2
+
 #output eDP-1 scale 1 max_render_time 15
-output eDP-1 scale 1
+output $primary pos 0 0 scale 1 res 1920x1080
+output $secondary pos 1920 0 scale 1 res 1920x1080
+
+workspace 1 output $primary
+workspace 2 output $primary
+workspace 3 output $primary
+workspace 4 output $primary
+workspace 5 output $primary
+workspace 6 output $primary
+workspace 7 output $primary
+workspace 8 output $primary
+workspace 9 output $secondary
+workspace 0 output $secondary
 
 default_border none
 default_floating_border none
-font pango:monospace 0
+font pango:monospace 1
 titlebar_padding 1
 titlebar_border_thickness 0
 
 exec_always "pkill waybar; waybar"
+exec_always "pkill dunst; dunst"
 #exec_always autotiling
+exec_always "killall papersway; papersway"
 exec --no-startup-id /lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
-assign [app_id="kitty"] workspace number 1
-assign [app_id="google-chrome"] workspace number 2
+# assign [app_id="kitty"] workspace number 1
+# assign [app_id="thorium-browser"] workspace number 2
+assign [app_id="zen"] workspace number 2
+assign [app_id="mercury-default"] workspace number 2
 assign [class="Spotify"] workspace number 3
-assign [class="whatsapp-nativefier-d40211"] workspace number 4
+# assign [app_id="whatsapp-nativefier"] workspace number 4
+
+for_window [app_id="nm"]
+{
+    floating enable
+    resize set width 650px height 550px
+    move position 1000px 0
+}
+
+for_window [app_id="whatsapp-nativefier"]
+{
+    move scratchpad
+}
+
+for_window [app_id="kasso"]
+{
+    resize set width 550px
+}
 
 exec kitty
-exec google-chrome-stable
-exec spotify-launcher
+# exec mercury-browser
+exec zen-browser
+# exec spotify
+exec "gtk-launch spotify"
 exec whatsapp-nativefier
 
-exec "python ~/Downloads/spotify-ad-automute/main.py &"
+#exec_always "~/code/rust/spotify_ad_automute/target/debug/spotify_ad_automute &"
 
 gaps inner 15
 
 
 ### swayfx ###
 blur enable
+blur_xray disable
 blur_radius 10
 
 corner_radius 15
@@ -94,6 +136,10 @@ input type:touchpad {
     scroll_factor 0.25
 }
 
+input type:keyboard {
+    xkb_options caps:ctrl_modifier
+}
+
 input 2:10:TPPS/2_IBM_TrackPoint {
     accel_profile flat
     pointer_accel 0.85
@@ -130,34 +176,62 @@ input 2:10:TPPS/2_IBM_TrackPoint {
     bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
     bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-    bindsym --locked XF86MonBrightnessUp exec brightnessctl set 2%+
-    bindsym --locked XF86MonBrightnessDown exec brightnessctl set 2%-
+    bindsym --locked XF86MonBrightnessUp exec brightnessctl set 1%+
+    bindsym --locked XF86MonBrightnessDown exec brightnessctl set 1%-
 
-    bindsym Ctrl+Shift+s exec "slurp | grim -g -"
+    bindsym Ctrl+Shift+s exec "slurp | grim -g - - | wl-copy && wl-paste > $(xdg-user-dir PICTURES)/$(date +'%Y-%m-%d-%H%M%S_grim.png')"
 #
 # Moving around:
 #
     # Move your focus around
-    bindsym $mod+$left focus left
+    # bindsym $mod+$left focus left
+    # bindsym $mod+$down focus down
+    # bindsym $mod+$up focus up
+    # bindsym $mod+$right focus right
+
+    # Papersway
+    bindsym $mod+$left exec papersway-msg focus left
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
-    # Or use $mod+[up|down|left|right]
-    bindsym $mod+Left focus left
-    bindsym $mod+Down focus down
-    bindsym $mod+Up focus up
-    bindsym $mod+Right focus right
+    bindsym $mod+$right exec papersway-msg focus right
 
-    # Move the focused window with the same, but add Shift
-    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$left exec papersway-msg move left
     bindsym $mod+Shift+$down move down
     bindsym $mod+Shift+$up move up
-    bindsym $mod+Shift+$right move right
+    bindsym $mod+Shift+$right move exec papersway-msg right
+
+    bindsym $mod+Tab exec papersway-msg monocle toggle
+    bindsym $mod+o exec papersway-msg other column
+    bindsym $mod+a exec papersway-msg fresh-workspace
+    bindsym $mod+n exec papersway-msg fresh-workspace send
+    bindsym $mod+t exec papersway-msg fresh-workspace take
+    bindsym $mod+u exec papersway-msg absorb_expel left
+    bindsym $mod+i exec papersway-msg absorb_expel right
+    bindsym $mod+minus exec papersway-msg cols decr
+    bindsym $mod+equal exec papersway-msg cols incr
+    bindsym $mod+Shift+P exec swaymsg "output * power on"
+    bindsym $mod+Shift+Alt+P exec swaymsg "output * power off"
+#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+    # bindsym $mod+u exec papersway-msg workspace prev
+    # bindsym $mod+i exec papersway-msg workspace next
+    # bindsym $mod+Shift+u exec papersway-msg move_workspace prev
+    # bindsym $mod+Shift+i exec papersway-msg move_workspace next
+    # Or use $mod+[up|down|left|right]
+    # bindsym $mod+Left focus left
+    # bindsym $mod+Down focus down
+    # bindsym $mod+Up focus up
+    # bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    # bindsym $mod+Shift+$left move left
+    # bindsym $mod+Shift+$down move down
+    # bindsym $mod+Shift+$up move up
+    # bindsym $mod+Shift+$right move right
     # Ditto, with arrow keys
-    bindsym $mod+Shift+Left move left
-    bindsym $mod+Shift+Down move down
-    bindsym $mod+Shift+Up move up
-    bindsym $mod+Shift+Right move right
+    # bindsym $mod+Shift+Left move left
+    # bindsym $mod+Shift+Down move down
+    # bindsym $mod+Shift+Up move up
+    # bindsym $mod+Shift+Right move right
 #
 # Workspaces:
 #
@@ -195,9 +269,9 @@ input 2:10:TPPS/2_IBM_TrackPoint {
     bindsym $mod+v splitv
 
     # Switch the current container between different layout styles
-    bindsym $mod+Tab layout toggle stacking splith
+    # bindsym $mod+Tab layout toggle stacking splith
     # bindsym $mod+w layout tabbed
-    bindsym $mod+e layout toggle split
+    # bindsym $mod+e layout toggle split
 
     # Make the current focus fullscreen
     bindsym $mod+f fullscreen
@@ -209,7 +283,7 @@ input 2:10:TPPS/2_IBM_TrackPoint {
     bindsym $mod+space focus mode_toggle
 
     # Move focus to the parent container
-    bindsym $mod+a focus parent
+    # bindsym $mod+a focus parent
 #
 # Scratchpad:
 #
@@ -217,11 +291,11 @@ input 2:10:TPPS/2_IBM_TrackPoint {
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+    bindsym $mod+Shift+slash move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+    bindsym $mod+slash scratchpad show
 #
 # Resizing containers:
 #
